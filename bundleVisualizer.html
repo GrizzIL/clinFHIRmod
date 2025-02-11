@@ -35,7 +35,7 @@
         }
     </style>
     <script>
-        angular.module("sampleApp",['ui.bootstrap','ngStorage','firebase','ngSanitize','ui.checkbox']).config(function($locationProvider) {
+        angular.module("sampleApp", ['ui.bootstrap', 'ngStorage', 'firebase', 'ngSanitize', 'ui.checkbox']).config(function ($locationProvider) {
             $locationProvider.html5Mode(true);
             $locationProvider.hashPrefix('!');
         });
@@ -54,14 +54,13 @@
     <script src="js/appConfigSvc.js"></script>
     <script src="js/libs/ngStorage.min.js"></script>
     <script src="js/filters.js"></script>
-    <script src="js/bundleVisualizerCtrl.js"></script>
     <title>Bundle Visualizer</title>
 </head>
-<body style="padding: 8px;padding-top: 80px" >
+<body style="padding: 8px;padding-top: 80px">
 <div ng-app="sampleApp" ng-controller="bundleVisualizerCtrl" class="container-fluid">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <div class="col-md-2 ">
+            <div class="col-md-2">
                 <span>
                     <a class="navbar-brand" href="#" ng-click="showVersion()">
                         Bundle Visualizer
@@ -70,7 +69,7 @@
             </div>
             <div class="col-md-2">
                 <div class="navbar-text">
-                    <div ng-hide = "showSelector || urlPassedIn" class="clickable" ng-click="showSelector = true">Show Selector</div>
+                    <div ng-hide="showSelector || urlPassedIn" class="clickable" ng-click="showSelector = true">Show Selector</div>
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -90,8 +89,7 @@
             </div>
         </div>
     </nav>
-
-    <div ng-show = "showSelector">
+    <div ng-show="showSelector">
         <uib-tabset>
             <uib-tab>
                 <uib-tab-heading>
@@ -104,11 +102,11 @@
                         There are 2 ways to specify the bundle:
                         <ul>
                             <li>By entering a query url that will return a Bundle. Generally this will be to
-                            a FHIR server, but it can be any Bundle accessible via HTTP. Url's can be saved in
-                            the browser cache for easy access if needed. Saved queries are in the list to the
-                            right, use the 'enter query' tab above to enter a new one</li>
+                                a FHIR server, but it can be any Bundle accessible via HTTP. Url's can be saved in
+                                the browser cache for easy access if needed. Saved queries are in the list to the
+                                right, use the 'enter query' tab above to enter a new one</li>
                             <li>You can paste a bundle directly into the tab above - either Json or XML is
-                            supported.</li>
+                                supported.</li>
                         </ul>
                         <br/>
                         <h4>Configuration</h4>
@@ -129,9 +127,9 @@
                     <div class="col-md-6">
                         <h4>Saved queries</h4>
                         <table class="table table-bordered">
-                            <tr ng-repeat = "item in savedQueries">
+                            <tr ng-repeat="item in savedQueries">
                                 <td>
-                                    <div class = 'clickable' ng-click="executeSavedQuery(item)">{{item.name}}</div>
+                                    <div class='clickable' ng-click="executeSavedQuery(item)">{{item.name}}</div>
                                 </td>
                                 <td>{{item.qry}}</td>
                                 <td><i class="glyphicon glyphicon-remove-sign clickable" ng-click="deleteQuery($index)"></i></td>
@@ -143,23 +141,23 @@
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab heading = "Paste in bundle">
+            <uib-tab heading="Paste in bundle">
                 <div class="row">
                     <div class="col-md-4">
                         <br/>
                         <p>Paste a bundle into the text area to the right. </p>
                         <p>Click the 'View bundle' button (that will appear) to start the Visualizer.</p>
                         <p>Either Json or XML can be used. XML will be converted to Json (using the <a href="https://github.com/lantanagroup/FHIR.js">Lantana</a> library) before
-                        being displayed.</p>
-                        <button ng-show = "input.newBundle" class="btn btn-success"
+                            being displayed.</p>
+                        <button ng-show="input.newBundle" class="btn btn-success"
                                 ng-click="viewNewBundle(input.newBundle)">View bundle</button>
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control" rows = '20' ng-model="input.newBundle"></textarea>
+                        <textarea class="form-control" rows='20' ng-model="input.newBundle"></textarea>
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab heading = "Enter query url">
+            <uib-tab heading="Enter query url">
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
@@ -184,14 +182,14 @@
                         <span class="help-block pull-right">Required if the query is to be saved</span>
                         <br/><br/>
                         <div>
-                            <button ng-show = "input.newQuery && ! testQueryBundle" class="btn btn-primary"
+                            <button ng-show="input.newQuery && !testQueryBundle" class="btn btn-primary"
                                     ng-click="testNewQuery(input.newQuery)">Test query</button>
-                            <button ng-show = "executedQueryBundle" class="btn btn-warning"
+                            <button ng-show="executedQueryBundle" class="btn btn-warning"
                                     ng-click="clearQuery()">Clear</button>
-                            <button ng-show = "executedQueryBundle && input.newQueryName" class="btn btn-danger"
-                                    ng-click="addNewQuery(input.newQuery,input.newQueryName)">Add query to list and view</button>
-                            <button ng-show = "executedQueryBundle" class="btn btn-success"
-                                    ng-click="viewNewQueryBundle(input.newQueryName)">View bundle</button>
+                            <button ng-show="executedQueryBundle && input.newQueryName" class="btn btn-danger"
+                                    ng-click="addNewQuery(input.newQuery, input.newQueryName)">Add query to list and view</button>
+                            <button ng-show="executedQueryBundle" class="btn btn-success"
+                                    ng-click="viewNewQueryBundle(executedQueryBundle)">View bundle</button>
                         </div>
                         <br/>
                         <strong ng-show="executedQuery">Executed query</strong>
@@ -202,7 +200,7 @@
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab heading = "Examples">
+            <uib-tab heading="Examples">
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
@@ -228,12 +226,20 @@
 </div>
 </body>
 <script>
-    angular.module('sampleApp').controller('bundleVisualizerCtrl', function($scope, $window) {
+    angular.module('sampleApp').controller('bundleVisualizerCtrl', function($scope, $window, $localStorage, appConfigSvc) {
+        $scope.showSelector = true; // Show selector by default
+        $scope.dataServer = $localStorage.dataServer || {name: "Default Data Server", url: "http://hapi.fhir.org/baseR4/"};
+        $scope.validationServer = $localStorage.validationServer || appConfigSvc.getCurrentConformanceServer();
+
         $scope.viewNewBundle = function(bundle) {
             // Save the bundle data in local storage or session storage
             sessionStorage.setItem('bundleData', JSON.stringify(bundle));
             // Open a new window or tab with the results page
             $window.open('BundleView.html', '_blank');
+        };
+
+        $scope.changeServer = function(type) {
+            // Change server logic here
         };
     });
 </script>
