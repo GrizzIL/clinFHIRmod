@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Bundle View</title>
+    <script src="js/libs/jquery-1.9.0.min.js"></script>
+    <script src="js/libs/angular.min1-5.js"></script>
+    <script src="js/libs/ui-bootstrap-tpls-2.0.1.min.js"></script>
+    <script src="js/libs/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/vis.min.css"/>
+    <script src="js/libs/angular-sanitize.js"></script>
+    <script src="js/libs/vis.min.js"></script>
+    <style>
+        #resourceGraph,
+        #singleResourceGraph,
+        #canonicalGraph {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body style="padding: 0; margin: 0;">
+    <div ng-app="sampleApp" ng-controller="bundleVisualizerCtrl" class="container-fluid" style="padding: 0;">
+        <div id="resourceGraph"></div>
+        <div id="singleResourceGraph"></div>
+        <div id="canonicalGraph"></div>
+    </div>
+</body>
+<script>
+    angular.module('sampleApp', [])
+    .controller('bundleVisualizerCtrl', function($scope) {
+        // Retrieve the bundle data from local storage or session storage
+        $scope.bundleData = JSON.parse(sessionStorage.getItem('bundleData'));
+        // Code to display the bundle data in the graph
+        console.log($scope.bundleData);
+    });
+</script>
+</html>
