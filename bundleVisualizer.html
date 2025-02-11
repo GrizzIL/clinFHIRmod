@@ -121,7 +121,7 @@
                         <span class="clickable" ng-click="changeServer('validation')">Change</span>
                         <br/><br/>
                         <p>Used when validating the bundle and its contents. This occurs automatically when a bundle is
-                            processed and displayed, unless disabled using the otion below. </p>
+                            processed and displayed, unless disabled using the option below. </p>
                         <br/>
                     </div>
                     <div class="col-md-6">
@@ -232,8 +232,10 @@
         $scope.validationServer = $localStorage.validationServer || appConfigSvc.getCurrentConformanceServer();
 
         $scope.viewNewBundle = function(bundle) {
+            console.log("viewNewBundle called with bundle:", bundle);
             // Save the bundle data in local storage or session storage
             sessionStorage.setItem('bundleData', JSON.stringify(bundle));
+            console.log("bundleData saved to sessionStorage:", sessionStorage.getItem('bundleData'));
             // Open a new window or tab with the results page
             $window.open('BundleView.html', '_blank');
         };
