@@ -25,17 +25,54 @@
 <body style="padding: 0; margin: 0;">
     <div ng-app="sampleApp" ng-controller="bundleVisualizerCtrl" class="container-fluid" style="padding: 0;">
         <div id="resourceGraph"></div>
-        <div id="singleResourceGraph"></div>
-        <div id="canonicalGraph"></div>
     </div>
 </body>
 <script>
     angular.module('sampleApp', [])
-    .controller('bundleVisualizerCtrl', function($scope) {
-        // Retrieve the bundle data from local storage or session storage
+    .controller('bundleVisualizerCtrl', function($scope, $timeout) {
+        // Retrieve the bundle data from session storage
         $scope.bundleData = JSON.parse(sessionStorage.getItem('bundleData'));
-        // Code to display the bundle data in the graph
-        console.log($scope.bundleData);
+        
+        // Initialize the graph
+        var nodes = new vis.DataSet([]);
+        var edges = new vis.DataSet([]);
+        var container = document.getElementById('resourceGraph');
+        var data = { nodes: nodes, edges: edges };
+        var options = {
+            physics: {
+                enabled: true,
+                barnesHut: {
+                    gravitationalConstant: -10000,
+                }
+            }
+        };
+        var network = new vis.Network(container, data, options);
+
+        // Populate the graph with bundle data
+        function drawGraph(bundle) {
+            bundle.entry.forEach(function(entry) {
+                var resource = entry.resource;
+                var id = resource.id || resource.fullUrl;
+                nodes.add({ id: id, label: resource.resourceType + '\n' + id });
+
+                if (resource.resourceType === 'Bundle') {
+                    resource.entry.forEach(function(bundleEntry) {
+                        var bundleResource = bundleEntry.resource;
+                        var bundleId = bundleResource.id || bundleResource.fullUrl;
+                        nodes.add({ id: bundleId, label: bundleResource.resourceType + '\n' + bundleId });
+                        edges.add({ from: id, to: bundleId });
+                    });
+                }
+            });
+
+            $timeout(function() {
+                network.fit();
+            }, 1000);
+        }
+
+        if ($scope.bundleData) {
+            drawGraph($scope.bundleData);
+        }
     });
 </script>
 </html>
