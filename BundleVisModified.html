@@ -1,0 +1,86 @@
+Here is the modified `bundleVisualizer.html` file with the right part of the page removed and the graph area maximized:
+
+```html
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <base href="/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YD055VEN8K"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YD055VEN8K');
+    </script>
+    <meta charset="UTF-8">
+    <script src="js/libs/jquery-1.9.0.min.js"></script>
+    <script src="js/libs/angular.min1-5.js"></script>
+    <script src="js/libs/ui-bootstrap-tpls-2.0.1.min.js"></script>
+    <script src="js/libs/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jsTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jsTreeThemes/proton/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/vis.min.css"/>
+    <script src="js/libs/angular-sanitize.js"></script>
+    <script src="js/libs/firebase.js"></script>
+    <script src="js/libs/angularfire.min.js"></script>
+    <script src="js/libs/jstree.min.js"></script>
+    <script src="js/libs/vkbeautify.0.99.00.beta.js"></script>
+    <script src="js/libs/fhirpath.min.js"></script>
+    <style>
+        .popover-content {
+            max-width: 400px;
+        }
+        .resourceType {
+            border: 1px solid darkgrey; padding: 2px;
+        }
+        #resourceGraph,
+        #singleResourceGraph,
+        #canonicalGraph {
+            width: 100%;
+            height: 100vh; /* Use the full viewport height */
+            border: none; /* Remove border */
+        }
+    </style>
+    <script>
+        angular.module("sampleApp",['ui.bootstrap','ngStorage','firebase','ngSanitize','ui.checkbox']).config(function($locationProvider) {
+            $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix('!');
+        });
+        angular.module("sampleApp").constant("moment", moment);
+    </script>
+    <script src="js/loginCtrl.js"></script>
+    <script src="js/bundleVisualizerCtrl.js"></script>
+    <script src="js/v2ToFhirSvc.js"></script>
+    <script src="js/libs/vis.min.js"></script>
+    <script src="js/modalDialogSvc.js"></script>
+    <script src="resourceBuilder/rbServices.js"></script>
+    <script src="js/libs/angular-bootstrap-checkbox.js"></script>
+    <script src="js/bundleVisualizerSvc.js"></script>
+    <script src="js/serverInteractionSvc.js"></script>
+    <script src="js/modalDialogSvc.js"></script>
+    <script src="js/appConfigSvc.js"></script>
+    <script src="js/libs/ngStorage.min.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/bundleVisualizerCtrl.js"></script>
+    <title>Bundle Visualizer</title>
+</head>
+<body style="padding: 0; margin: 0;">
+    <div ng-app="sampleApp" ng-controller="bundleVisualizerCtrl" class="container-fluid" style="padding: 0;">
+        <!-- Hide or remove the navigation bar -->
+        <div class="row" style="margin: 0;">
+            <div class="col-md-12" style="padding: 0;">
+                <!-- Only keep the graph container -->
+                <div id="resourceGraph"></div>
+                <div id="singleResourceGraph"></div>
+                <div id="canonicalGraph"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+You can create a new file with this content in your repository.
